@@ -17,10 +17,12 @@ def get_db():
 
 def insert_doc(doc, collection):
     '''
-    Insert document to collection. If successful, return inserted_id. None otherwise
-    @Param:
+    Insert document to collection.
+    If successful, return a bson object of the inserted_id, None otherwise.
+    @Params:
         * doc: Document to be inserted
         * collection: Collection to insert documnet to
+
     @Return: inserted_id
     '''
     inserted_id = collection.insert_one(doc).inserted_id
@@ -30,12 +32,17 @@ def insert_doc(doc, collection):
         return inserted_id
     return
 
+
+# TESTING
+# TODO: add unit tests
 client = get_db()
 print("- Getting todo-db - ")
 db = client['todo-db']
 
 print("- Getting nickel-todo collection -")
 collection= db['nickel-todo']
+
+
 
 
 
