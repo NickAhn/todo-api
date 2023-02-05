@@ -31,9 +31,18 @@ class Database:
             return str(inserted_id)
         return
 
-    def get_all_tasks(self):
+    def get_all_tasks(self) -> list:
+        '''
+        Get all documents in todo_collection
+        @Return: list of Task dictionaries
+        '''
         print("- getting tasks - ")
-        return self.todo_collection.find({})
+        tasks = []
+        docs = self.todo_collection.find({}, projection={'_id': False})
+        for doc in docs:
+            tasks.append(doc)
+
+        return tasks
 
     def print_tasks(self):
         for document in self.get_all_tasks():
