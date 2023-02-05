@@ -33,7 +33,24 @@ def add():
 
 @app.route("/api/get-all-tasks", methods=['GET'])
 def get_all_tasks():
+    '''
+    GET request to get all tasks in database
+    '''
     return db.get_all_tasks()
+
+
+@app.route('/api/delete', methods=['DELETE'])
+def delete_task_by_id():
+    '''
+    DEL request to delete task by id
+    '''
+    body = request.get_json()
+    try:
+        x = db.delete_task_by_id(body['id'])
+        print(x)
+        return jsonify(x)
+    except Exception as e:
+        return jsonify({"status":"error", "error_message":e})
 
 
 @app.route("/api/test", methods=['GET', 'POST'])

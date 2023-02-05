@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from pprint import pprint
 from cred import pwd
 import json
-from bson import BSON
+from bson import BSON, ObjectId
 
 class Database:
     def __init__(self) -> None:
@@ -45,6 +45,22 @@ class Database:
 
         return tasks
     
+    def delete_task_by_id(self, id:str):
+        '''
+        Delete task by id. 
+        @Params:
+            * id:string = inserted_id value of Task to be deleted
+        @Return: dict with number of deleted tasks
+        '''
+        print(f"- delete_task({id}) - ")
+        # Must convert id to ObjectId
+        x = self.todo_collection.delete_one({'_id':ObjectId(id)})
+        
+        return {'deleted_count':x.deleted_count}
+
+
+
+
 
 
     def print_tasks(self):
