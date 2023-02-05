@@ -2,47 +2,46 @@ from pymongo import MongoClient
 from pprint import pprint
 from cred import pwd
 
-def get_db():
-    '''
-    Create MongoClient instance
-    '''
-    connection_string = f"mongodb+srv://nickel:{pwd}@todo-db.hnwi9a3.mongodb.net/?retryWrites=true&w=majority"
-    try:
+
+
+class Database:
+    def __init__(self) -> None:
+        '''
+        Create MongoClient instance
+        '''
+        connection_string = f"mongodb+srv://nickel:{pwd}@todo-db.hnwi9a3.mongodb.net/?retryWrites=true&w=majority"
         client = MongoClient(connection_string)
-    except Exception as e:
-        print("Error:", e)
+
+        self.db = client['todo-db']
+        self.todo_collection = self.db['nickel-todo']
+
+    def insert_doc(self, doc):
+        '''
+        Insert document to collection.
+        If successful, return a bson object of the inserted_id, None otherwise.
+        @Params:
+            * doc:BSON = Document to be inserted
+            * collection:str = Collection to insert documnet to
+
+        @Return: inserted_id
+        '''
+        inserted_id = self.todo_collection.insert_one(doc).inserted_id
+        if inserted_id:
+            print(inserted_id, type(inserted_id))
+            return inserted_id
         return
 
-    return client
+    def get_all_tasks(self):
+        print("- getting tasks - ")
+        return self.todo_collection.find({})
 
-def insert_doc(doc, collection):
-    '''
-    Insert document to collection.
-    If successful, return a bson object of the inserted_id, None otherwise.
-    @Params:
-        * doc: Document to be inserted
-        * collection: Collection to insert documnet to
-
-    @Return: inserted_id
-    '''
-    inserted_id = collection.insert_one(doc).inserted_id
-    if inserted_id:
-        print(inserted_id, type(inserted_id))
-        print(db.list_collection_names())
-        return inserted_id
-    return
+    def print_tasks(self):
+        for document in self.get_all_tasks():
+            print(document)
 
 
-# TESTING
-# TODO: add unit tests
-client = get_db()
-print("- Getting todo-db - ")
-db = client['todo-db']
-
-print("- Getting nickel-todo collection -")
-collection= db['nickel-todo']
-
-
+test = Database()
+test.print_tasks()
 
 
 
