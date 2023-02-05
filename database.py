@@ -38,11 +38,14 @@ class Database:
         '''
         print("- getting tasks - ")
         tasks = []
-        docs = self.todo_collection.find({}, projection={'_id': False})
+        docs = self.todo_collection.find({})
         for doc in docs:
+            doc['_id'] = str(doc['_id'])
             tasks.append(doc)
 
         return tasks
+    
+
 
     def print_tasks(self):
         for document in self.get_all_tasks():
