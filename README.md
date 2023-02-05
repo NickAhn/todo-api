@@ -4,6 +4,46 @@ A todo list web application and API written with Python, Flask, and MongoDB
 ***(work in progress)***
 
 # API Documentation
+## Table of Contents
+
+### GET
+[Get All Tasks](#get-all-tasks)
+
+### POST
+[Add Task](#add-task)
+
+### PUT
+
+### DELETE
+[Delete task by id](#delete-task)
+<hr>
+
+[//]: ---------------------------------------------
+
+## Get All Tasks
+> Get list of all tasks in database
+### Endpoint
+* ```/api/get-all-tasks```
+
+### Method
+* **GET**
+
+### Responses
+**Successful Response**
+* Content:
+
+    ```
+    [
+        {
+            'text': string,
+            'priority': int,
+            'completed': bool
+            '_id': string
+        }
+        (...)
+    ]
+    ```
+
 ## Add Task
 > Add a task to todo list database
 ### Endpoint
@@ -11,7 +51,6 @@ A todo list web application and API written with Python, Flask, and MongoDB
 
 ### Method
 * **POST**
-# Convert id to ObjectId and use 
 ### Params
 application/json
 * **text** *string*
@@ -48,29 +87,7 @@ application/json
     }
     ```
 
-## Get All Tasks
-> Get list of all tasks in database
-### Endpoint
-* ```/api/get-all-tasks```
 
-### Method
-* **GET**
-
-### Responses
-**Successful Response**
-* Content:
-
-    ```
-    [
-        {
-            'text': string,
-            'priority': int,
-            'completed': bool
-            '_id': string
-        }
-        (...)
-    ]
-    ```
 
 **Error Response**
 * Content:
