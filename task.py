@@ -9,6 +9,8 @@ Task {
 '''
 class Task:
     def __init__(self, text="", priority=4) -> None:
+        if priority is None:
+            priority = 4
         self.text = text
         self.priority = priority
         self.complete = False
