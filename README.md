@@ -5,13 +5,13 @@ A todo list web application and API written with Python, Flask, and MongoDB
 
 # API Documentation
 ## Add Task
-Add a task to todo list database
+> Add a task to todo list database
 ### Endpoint
 * ```/api/add```
 
 ### Method
 * **POST**
-
+# Convert id to ObjectId and use 
 ### Params
 application/json
 * **text** *string*
@@ -80,3 +80,26 @@ application/json
         'error_message': string
     }
     ```
+
+## Delete Task
+> Delete Task by *inserted_id*
+### Endpoint
+* ```/api/delete```
+
+### Method
+* **DELETE**
+
+### Params
+application/json
+* **id** str
+
+    inserted_id of task to be deleted
+
+### Responses
+**Successful Response**:
+```
+{
+    'status': 'ok',
+    'deleted_count': int
+}
+```
