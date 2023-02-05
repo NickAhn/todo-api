@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 from pprint import pprint
 from cred import pwd
-
-
+import json
+from bson import BSON
 
 class Database:
     def __init__(self) -> None:
@@ -15,7 +15,7 @@ class Database:
         self.db = client['todo-db']
         self.todo_collection = self.db['nickel-todo']
 
-    def insert_doc(self, doc):
+    def insert_doc(self, doc) -> str:
         '''
         Insert document to collection.
         If successful, return a bson object of the inserted_id, None otherwise.
@@ -25,10 +25,10 @@ class Database:
 
         @Return: inserted_id
         '''
+        print("- insert_doc() - ")
         inserted_id = self.todo_collection.insert_one(doc).inserted_id
         if inserted_id:
-            print(inserted_id, type(inserted_id))
-            return inserted_id
+            return str(inserted_id)
         return
 
     def get_all_tasks(self):
@@ -38,11 +38,5 @@ class Database:
     def print_tasks(self):
         for document in self.get_all_tasks():
             print(document)
-
-
-test = Database()
-test.print_tasks()
-
-
 
 
