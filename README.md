@@ -1,24 +1,60 @@
-# TODO webapp
+# TODO webapp and API
 A todo list web application and API written with Python, Flask, and MongoDB 
 
 ***(work in progress)***
+
+## TODO CLI
+A Command-line interface version of the todo list is being developed. The app is being developed with [Go](https://go.dev/) and Cobra, and it performs CRUD operations through the API in this repository.
+
+Link to project: [**todo-cli**](https://github.com/NickAhn/todo-cli)
 
 # API Documentation
 ## Table of Contents
 
 ### GET
-[Get All Tasks](#get-all-tasks)
+* [Get Task by id](#get-task-by-id)
+* [Get All Tasks](#get-all-tasks)
 
 ### POST
-[Add Task](#add-task)
+* [Add Task](#add-task)
 
 ### PUT
+* 
 
 ### DELETE
-[Delete task by id](#delete-task)
+* [Delete task by id](#delete-task)
 <hr>
 
 [//]: ---------------------------------------------
+
+## Get Task By Id
+> Get Task by its inserted_id
+
+### Endpoint
+* ```/api/get-task-by-id```
+### Method
+* **GET**
+### Responses
+**Successful Response**
+* Returns a json with the Task metadata
+* Content:
+    ```
+    {
+        'text': string,
+        'priority': int,
+        'completed': bool,
+        '_id': string
+    }
+    ```
+**Error Response**
+* Content:
+    ```
+    {
+        'status': 'error',
+        'error_message': string
+    }
+    ```
+[(Back to top)](#table-of-contents)
 
 ## Get All Tasks
 > Get list of all tasks in database
@@ -43,6 +79,9 @@ A todo list web application and API written with Python, Flask, and MongoDB
         (...)
     ]
     ```
+
+[(Back to top)](#table-of-contents)
+
 
 ## Add Task
 > Add a task to todo list database
@@ -78,8 +117,8 @@ application/json
     }
     ```
 
-**Error Response**
-* Content:
+**error response**
+* content:
     ```
     {
     'status': 'error',
@@ -87,16 +126,8 @@ application/json
     }
     ```
 
+[(Back to top)](#table-of-contents)
 
-
-**Error Response**
-* Content:
-    ```
-    {
-        'status': 'error',
-        'error_message': string
-    }
-    ```
 
 ## Delete Task
 > Delete Task by *inserted_id*
@@ -114,9 +145,22 @@ application/json
 
 ### Responses
 **Successful Response**:
-```
-{
-    'status': 'ok',
-    'deleted_count': int
-}
-```
+* Deletes task from database and returns a json with deleted count.
+* Content:
+    ```
+    {
+        'status': 'ok',
+        'deleted_count': int
+    }
+    ```
+
+**error response**
+* Content:
+    ```
+    {
+    'status': 'error',
+    'error_message': string
+    }
+    ```
+
+[(Back to top)](#table-of-contents)
