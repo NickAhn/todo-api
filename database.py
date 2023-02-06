@@ -18,10 +18,10 @@ class Database:
     def insert_doc(self, doc) -> str:
         '''
         Insert document to collection.
-        If successful, return a bson object of the inserted_id, None otherwise.
+        If successful, return a string of the inserted_id, None otherwise.
         @Params:
-            * doc:BSON = Document to be inserted
-            * collection:str = Collection to insert documnet to
+            * doc: dict = Document to be inserted
+            * collection: str = Collection to insert document to
 
         @Return: inserted_id
         '''
@@ -45,11 +45,27 @@ class Database:
 
         return tasks
     
-    def delete_task_by_id(self, id:str):
+    def get_task_by_id(self, id:str) -> dict:
         '''
-        Delete task by id. 
+        Get task by inserted_id.
         @Params:
-            * id:string = inserted_id value of Task to be deleted
+            * id: string = inserted_id value of Task to find
+        @Return: If find is successful, return task in dictionary format. None otherwise.
+        '''
+        print("- get_task_by_id -")
+        doc = self.todo_collection.find_one({'_id':ObjectId(id)})
+        doc['_id'] = str(doc['_id'])
+        if doc:
+            return doc
+        else:
+            return None
+
+    
+    def delete_task_by_id(self, id:str) -> dict:
+        '''
+        Delete task by inserted_id. 
+        @Params:
+            * id: string = inserted_id value of Task to be deleted
         @Return: dict with number of deleted tasks
         '''
         print(f"- delete_task({id}) - ")
@@ -58,6 +74,16 @@ class Database:
         
         return {'deleted_count':x.deleted_count}
 
+
+    def update_task_text(self, id:str, new_text:str):
+        print("- update_task_by_id() - ")
+        self.todo_collection.update_one(
+            {"_id":ObjectId(id)},
+            {"$set":{
+                "text": new_text
+            }}
+            )
+        return 
 
 
 

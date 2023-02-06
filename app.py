@@ -39,6 +39,29 @@ def get_all_tasks():
     return db.get_all_tasks()
 
 
+@app.route("/api/get-task-by-id", methods=['GET'])
+def get_task_by_id():
+    '''
+    GET request to get task by inserted_id
+    @Query params:
+        * id: string = inserted_id (Required)
+    '''
+    print("\n\n----------------------------------------------------")
+    try:
+        print(
+            'app route'
+        )
+        inserted_id = request.args['id']
+        doc = db.get_task_by_id(inserted_id)
+        return jsonify(doc)
+
+    except Exception as e:
+        return jsonify({
+            'status':'error',
+            'error_message':str(e)
+        })
+
+
 @app.route('/api/delete', methods=['DELETE'])
 def delete_task_by_id():
     '''
