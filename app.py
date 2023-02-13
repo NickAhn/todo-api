@@ -75,6 +75,9 @@ def update_task_text(id):
     body = request.get_json()
     try:
         success = db.update_task_text(id=id, new_text=body['new_text'])
+        msg = ''
+        if not success:
+            msg = 'Task has not been updated. Check if inserted_id provided is valid'
         return jsonify({
             'status':'ok',
             'updated': str(success)
