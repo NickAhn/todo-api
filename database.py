@@ -15,6 +15,7 @@ class Database:
         self.db = client['todo-db']
         self.todo_collection = self.db['nickel-todo']
 
+
     def insert_doc(self, doc) -> str:
         '''
         Insert document to collection.
@@ -31,6 +32,7 @@ class Database:
             return str(inserted_id)
         return
 
+
     def get_all_tasks(self) -> list:
         '''
         Get all documents in todo_collection
@@ -44,6 +46,7 @@ class Database:
             tasks.append(doc)
 
         return tasks
+    
     
     def get_task_by_id(self, id:str) -> dict:
         '''
@@ -76,19 +79,42 @@ class Database:
 
 
     def update_task_text(self, id:str, new_text:str):
+        '''
+        Update task description
+        @Params:
+            * id: string = inserted_id value of Task to be updated
+            * new_prio: int = new priority to be set
+        @Return: True if update was successful. False otherwise.
+        '''
         print("- update_task_by_id() - ")
-        self.todo_collection.update_one(
+        update_result = self.todo_collection.update_one(
             {"_id":ObjectId(id)},
             {"$set":{
                 "text": new_text
             }}
             )
-        return 
+        return update_result['modified_count'] == 1 
+    
 
-
-
-
-
+    # TODO: refactor update functions into one
+    def update_task_priority(self, id:str, new_prio: int):
+        '''
+        Update task priority
+        @Params:
+            * id: string = inserted_id value of Task to be updated
+            * new_prio: int = new priority to be set
+        @Return: True if update was successful. False otherwise.
+        '''
+        print("- update_task_priority() called - ")
+        update_result = self.todo_collection.update_one(
+            {"_id":ObjectId(id)},
+            {"$set":{
+                "priority": new_prio 
+            }}
+            )
+        return update_result['modified_count'] == 1
+    
+    
     def print_tasks(self):
         for document in self.get_all_tasks():
             print(document)
