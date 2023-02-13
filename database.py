@@ -87,13 +87,13 @@ class Database:
         @Return: True if update was successful. False otherwise.
         '''
         print("- update_task_by_id() - ")
-        update_result = self.todo_collection.update_one(
+        result = self.todo_collection.update_one(
             {"_id":ObjectId(id)},
             {"$set":{
                 "text": new_text
             }}
             )
-        return update_result['modified_count'] == 1 
+        return result.modified_count == 1 
     
 
     # TODO: refactor update functions into one
@@ -106,13 +106,13 @@ class Database:
         @Return: True if update was successful. False otherwise.
         '''
         print("- update_task_priority() called - ")
-        update_result = self.todo_collection.update_one(
+        result = self.todo_collection.update_one(
             {"_id":ObjectId(id)},
             {"$set":{
                 "priority": new_prio 
             }}
             )
-        return update_result['modified_count'] == 1
+        return result.modified_count == 1
     
     
     def print_tasks(self):
