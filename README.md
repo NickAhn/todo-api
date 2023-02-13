@@ -19,7 +19,7 @@ Link to project: [**todo-cli**](https://github.com/NickAhn/todo-cli)
 * [Add Task](#add-task)
 
 ### PUT
-* 
+* [Update Task](#update-task)
 
 ### DELETE
 * [Delete task by id](#delete-task)
@@ -31,7 +31,7 @@ Link to project: [**todo-cli**](https://github.com/NickAhn/todo-cli)
 > Get Task by its inserted_id
 
 ### Endpoint
-* ```/api/get-task-by-id```
+* ```/api/tasks/<string:id>```
 ### Method
 * **GET**
 ### Responses
@@ -59,7 +59,7 @@ Link to project: [**todo-cli**](https://github.com/NickAhn/todo-cli)
 ## Get All Tasks
 > Get list of all tasks in database
 ### Endpoint
-* ```/api/get-all-tasks```
+* ```/api/tasks```
 
 ### Method
 * **GET**
@@ -86,7 +86,7 @@ Link to project: [**todo-cli**](https://github.com/NickAhn/todo-cli)
 ## Add Task
 > Add a task to todo list database
 ### Endpoint
-* ```/api/add```
+* ```/api/tasks```
 
 ### Method
 * **POST**
@@ -128,11 +128,38 @@ application/json
 
 [(Back to top)](#table-of-contents)
 
+## Update Task
+> Update task by *inserted_id*
+### Endpoint
+* ```/api/tasks/<string_id>```
+
+### Method
+* **PUT**
+
+### Params
+application/json
+* **new_text** str
+
+    New description for task
+
+### Responses
+**Successful Response**:
+* Update task description and return a json with update information.
+```
+{
+    'status':'ok',
+    'updated': bool,
+    'msg': string
+}
+```
+
+[(Back to top)](#table-of-contents)
+
 
 ## Delete Task
 > Delete Task by *inserted_id*
 ### Endpoint
-* ```/api/delete```
+* ```/api/tasks/<string:id>```
 
 ### Method
 * **DELETE**
@@ -164,3 +191,4 @@ application/json
     ```
 
 [(Back to top)](#table-of-contents)
+
