@@ -11,7 +11,7 @@ db = database.Database()
 def home():
     return render_template("index.html")
 
-
+# TODO: change names of routes to follow REST practices
 @app.route("/api/add", methods=['POST'])
 def add():
     '''
@@ -60,6 +60,28 @@ def get_task_by_id():
             'status':'error',
             'error_message':str(e)
         })
+        
+@app.route("/api/task/{inserted_id}", methods=['PUT'])
+def update_task_text():
+    '''
+    PUT request to update task description
+    @Params:
+        * id: string = inserted_id
+    '''
+    body = request.get_json()
+    try:
+        success = db.update_task_text(id=body['id'], new_text=['new_text'])
+        return jsonify({
+            'status':'ok',
+            'updated': str(success)
+        })
+        
+    except KeyError as e:
+        return jsonify({
+            'status':'error',
+            'error_message': 'Incorrect/missing key. ' + str(e)
+        })
+        
 
 
 @app.route('/api/delete', methods=['DELETE'])
